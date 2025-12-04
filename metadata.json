@@ -1,0 +1,7 @@
+{
+  "name": "Twister Blitz",
+  "description": "A high-speed tongue twister challenge powered by AI. Generate unique twisters and test your pronunciation speed against the clock.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
