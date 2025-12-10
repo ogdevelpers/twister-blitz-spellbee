@@ -7,10 +7,10 @@ import { motion } from 'framer-motion';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#0f172a] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900 via-[#0f172a] to-black text-white overflow-hidden font-sans">
+    <div className="w-[1080px] h-[1920px] bg-[#0f172a] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900 via-[#0f172a] to-black text-white overflow-hidden font-sans flex flex-col relative">
       
       {/* Animated Background Elements - Optimized with will-change and reduced motion */}
-      <div className="fixed inset-0 pointer-events-none z-0">
+      <div className="absolute inset-0 pointer-events-none z-0">
         <motion.div 
           animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
           transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
@@ -31,8 +31,9 @@ export default function Home() {
         />
       </div>
 
-      <header className="relative z-10 p-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-center">
+      {/* Header - Fixed at top */}
+      <header className="relative z-10 flex-shrink-0 pt-8 pb-4 px-6">
+        <div className="flex items-center justify-center">
           <motion.div 
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -50,11 +51,15 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="relative z-10 py-6 px-4">
-        <GameInterface />
+      {/* Main Content - Flexible, takes remaining space */}
+      <main className="relative z-10 flex-1 overflow-y-auto overflow-x-hidden px-4 py-4 min-h-0">
+        <div className="h-full">
+          <GameInterface />
+        </div>
       </main>
       
-      <footer className="relative z-10 py-6 text-center">
+      {/* Footer - Fixed at bottom */}
+      <footer className="relative z-10 flex-shrink-0 py-4 text-center">
         <div className="inline-block bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full border border-white/5">
            <p className="text-slate-400 text-xs font-bold tracking-widest uppercase">
              Powered by Spellbee

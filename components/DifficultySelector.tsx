@@ -36,11 +36,11 @@ const DifficultySelector: React.FC<DifficultySelectorProps> = ({ onSelect }) => 
   ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4 flex flex-col items-center">
+    <div className="w-full mx-auto p-4 flex flex-col items-center gap-8 h-full justify-center">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-12"
+        className="text-center"
       >
         <h2 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 mb-4 game-font">
           Choose Your Challenge
@@ -50,7 +50,7 @@ const DifficultySelector: React.FC<DifficultySelectorProps> = ({ onSelect }) => 
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+      <div className="grid grid-cols-1 gap-6 w-full">
         {difficulties.map((difficulty, index) => (
           <motion.button
             key={difficulty.level}

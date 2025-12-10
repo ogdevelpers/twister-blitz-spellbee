@@ -35,6 +35,18 @@ npm run build
 npm start
 ```
 
+## Deploy to Cloudflare Pages
+
+This application is configured to run on Cloudflare Pages with Edge Runtime support. See [CLOUDFLARE.md](./CLOUDFLARE.md) for detailed deployment instructions.
+
+**Quick Setup:**
+1. Push your code to GitHub/GitLab
+2. Connect your repository to Cloudflare Pages
+3. Set `OPENAI_API_KEY` environment variable in Cloudflare dashboard
+4. Deploy!
+
+The API route uses Edge Runtime and fetch API for full Cloudflare compatibility.
+
 ## Tech Stack
 
 - **Next.js 15** - React framework with App Router

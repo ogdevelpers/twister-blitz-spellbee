@@ -186,7 +186,7 @@ const GameInterface: React.FC = () => {
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4 flex flex-col items-center relative">
+    <div className="w-full h-full mx-auto flex flex-col items-center relative gap-4">
       
       {/* Combo Flash Overlay */}
       <AnimatePresence>
@@ -205,7 +205,7 @@ const GameInterface: React.FC = () => {
       </AnimatePresence>
 
       {/* Header / Stats */}
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+      <div className="w-full grid grid-cols-2 gap-4">
         {/* Timer Card */}
         <div className="bg-slate-800/80 p-4 rounded-3xl border-4 border-slate-700 relative overflow-hidden group shadow-[0_8px_0_#1e293b]">
           <div className="flex items-center justify-between z-10 relative">
@@ -254,8 +254,8 @@ const GameInterface: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Twister Area */}
-      <div className="relative w-full min-h-[350px] flex flex-col items-center justify-center mb-10 perspective-1000">
+      {/* Main Twister Area - Expands to fill available space */}
+      <div className="relative w-full flex flex-col items-center justify-center perspective-1000 flex-1 min-h-0 py-8">
         <AnimatePresence mode='wait'>
           {isLoadingTwister ? (
             <motion.div 
@@ -281,7 +281,7 @@ const GameInterface: React.FC = () => {
               className="w-full flex flex-col items-center"
             >
               {/* Badges */}
-              <div className="flex gap-3 mb-6">
+              <div className="flex gap-3 mb-8">
                 <span className="px-4 py-1 rounded-full bg-indigo-500/20 border-2 border-indigo-500 text-indigo-300 font-bold uppercase text-sm tracking-wide shadow-[0_0_15px_rgba(99,102,241,0.3)]">
                     {gameState.currentTwister?.theme || "Random"}
                 </span>
@@ -296,11 +296,11 @@ const GameInterface: React.FC = () => {
                 </span>
               </div>
               
-              {/* The Twister Text */}
-              <div className="relative group cursor-default">
-                <div className="absolute -inset-4 bg-gradient-to-r from-pink-600 via-purple-600 to-cyan-600 rounded-3xl opacity-20 group-hover:opacity-40 blur-xl transition duration-500"></div>
-                <div className="relative bg-slate-900/80 p-8 rounded-3xl border border-slate-700 backdrop-blur-xl shadow-2xl">
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl text-center font-black text-transparent bg-clip-text bg-gradient-to-br from-white via-cyan-100 to-blue-200 leading-tight tracking-wide drop-shadow-lg">
+              {/* The Twister Text - Enhanced to use more space */}
+              <div className="relative group cursor-default w-full max-w-5xl">
+                <div className="absolute -inset-8 bg-gradient-to-r from-pink-600 via-purple-600 to-cyan-600 rounded-3xl opacity-20 group-hover:opacity-40 blur-xl transition duration-500"></div>
+                <div className="relative bg-slate-900/80 p-12 rounded-3xl border-2 border-slate-700 backdrop-blur-xl shadow-2xl min-h-[300px] flex items-center justify-center">
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl text-center font-black text-transparent bg-clip-text bg-gradient-to-br from-white via-cyan-100 to-blue-200 leading-tight tracking-wide drop-shadow-lg px-4">
                     "{gameState.currentTwister?.text}"
                   </h1>
                 </div>
@@ -355,16 +355,16 @@ const GameInterface: React.FC = () => {
       </div>
 
       {/* Controls Area */}
-      <div className="w-full max-w-lg z-10">
+      <div className="w-full z-10 flex-shrink-0">
         {gameState.status === 'idle' ? (
           <button
             onClick={startGame}
             disabled={isLoadingTwister}
-            className="w-full group relative bg-cyan-500 hover:bg-cyan-400 text-slate-900 py-6 px-8 rounded-3xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_8px_0_#0e7490] active:shadow-none active:translate-y-2"
+            className="w-full group relative bg-cyan-500 hover:bg-cyan-400 text-slate-900 py-5 px-6 rounded-3xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_8px_0_#0e7490] active:shadow-none active:translate-y-2"
           >
              <div className="flex items-center justify-center space-x-3">
-               <Play className="w-8 h-8 fill-current" />
-               <span className="text-3xl font-black game-font tracking-wide">START GAME</span>
+               <Play className="w-7 h-7 fill-current" />
+               <span className="text-2xl font-black game-font tracking-wide">START GAME</span>
              </div>
              <div className="absolute inset-0 rounded-3xl ring-4 ring-cyan-300/30 group-hover:ring-cyan-300/60 transition-all"></div>
           </button>
@@ -397,13 +397,13 @@ const GameInterface: React.FC = () => {
 
       {/* Spoken Statements History */}
       {gameState.status === 'playing' && spokenStatements.length > 0 && (
-        <div className="mt-8 w-full max-w-2xl">
+        <div className="w-full flex-shrink-0">
           <div className="bg-slate-800/80 p-4 rounded-2xl border-2 border-slate-700 shadow-lg">
-            <h3 className="text-lg font-bold text-slate-300 mb-3 flex items-center gap-2">
-              <Zap className="w-5 h-5 text-cyan-400" />
+            <h3 className="text-base font-bold text-slate-300 mb-3 flex items-center gap-2">
+              <Zap className="w-4 h-4 text-cyan-400" />
               Spoken Statements ({spokenStatements.length})
             </h3>
-            <div className="max-h-48 overflow-y-auto space-y-2 custom-scrollbar">
+            <div className="max-h-40 overflow-y-auto space-y-2 custom-scrollbar">
               <AnimatePresence>
                 {spokenStatements.slice(-10).map((statement, index) => (
                   <motion.div
@@ -441,7 +441,7 @@ const GameInterface: React.FC = () => {
       )}
 
       {/* Instructions */}
-      <div className="mt-12 p-4 bg-slate-900/50 rounded-xl border border-white/5 text-center text-slate-400 text-sm max-w-md backdrop-blur-sm">
+      <div className="p-4 bg-slate-900/50 rounded-xl border border-white/5 text-center text-slate-400 text-sm backdrop-blur-sm flex-shrink-0">
         <p className="font-medium">🎤 PRO TIP: Speak clearly and loudly! Say it {TARGET_SCORE} times before the purple bar runs out!</p>
       </div>
 
