@@ -9,8 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Outfit', 'sans-serif'],
-        bangers: ['Bangers', 'cursive'],
+        sans: ['Lato', 'sans-serif'],
       },
     },
   },

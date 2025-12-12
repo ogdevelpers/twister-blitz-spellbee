@@ -36,7 +36,7 @@ const DifficultySelector: React.FC<DifficultySelectorProps> = ({ onSelect }) => 
   ];
 
   return (
-    <div className="w-full mx-auto p-4 flex flex-col items-center gap-8 h-full justify-center">
+    <div className="w-full mx-auto p-4 flex flex-col items-center gap-6 h-full justify-center">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -50,7 +50,7 @@ const DifficultySelector: React.FC<DifficultySelectorProps> = ({ onSelect }) => 
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 gap-6 w-full">
+      <div className="grid grid-cols-1 gap-4 w-full max-w-2xl">
         {difficulties.map((difficulty, index) => (
           <motion.button
             key={difficulty.level}
@@ -62,18 +62,18 @@ const DifficultySelector: React.FC<DifficultySelectorProps> = ({ onSelect }) => 
             onClick={() => onSelect(difficulty.level)}
             className={`relative group bg-gradient-to-br ${difficulty.color} p-1 rounded-3xl shadow-[0_8px_0_rgba(0,0,0,0.3)] hover:shadow-[0_12px_0_rgba(0,0,0,0.3)] transition-all duration-300 active:shadow-[0_4px_0_rgba(0,0,0,0.3)] active:translate-y-1`}
           >
-            <div className="bg-slate-900 rounded-[1.4rem] p-8 flex flex-col items-center space-y-4 h-full">
-              <div className={`p-4 rounded-2xl bg-gradient-to-br ${difficulty.color} shadow-lg transform group-hover:rotate-6 transition-transform`}>
+            <div className="bg-slate-900 rounded-[1.4rem] p-6 flex flex-col items-center space-y-3 h-full">
+              <div className={`p-3 rounded-2xl bg-gradient-to-br ${difficulty.color} shadow-lg transform group-hover:rotate-6 transition-transform`}>
                 {difficulty.icon}
               </div>
-              <h3 className="text-3xl font-black text-white game-font uppercase">
+              <h3 className="text-2xl font-black text-white game-font uppercase">
                 {difficulty.label}
               </h3>
               <p className="text-slate-400 text-sm text-center font-medium leading-relaxed">
                 {difficulty.description}
               </p>
-              <div className="mt-4 px-6 py-3 rounded-full bg-gradient-to-r from-white/10 to-white/5 border border-white/20 group-hover:from-white/20 group-hover:to-white/10 transition-all">
-                <span className="text-white font-bold text-lg">Start</span>
+              <div className="mt-2 px-5 py-2 rounded-full bg-gradient-to-r from-white/10 to-white/5 border border-white/20 group-hover:from-white/20 group-hover:to-white/10 transition-all">
+                <span className="text-white font-bold text-base">Start</span>
               </div>
             </div>
           </motion.button>
