@@ -65,6 +65,9 @@ const DifficultySelector: React.FC<DifficultySelectorProps> = ({ onSelect }) => 
           <h2 className="text-4xl font-bold text-white mb-3 game-font">
             Select Difficulty Level
           </h2>
+          <p className="text-slate-300 text-lg font-medium max-w-2xl mx-auto leading-relaxed">
+            Choose your challenge level and test your tongue-twisting skills! You'll need to correctly repeat the phrase 5 times within 60 seconds. Speak clearly and get ready for some brain-bending fun!
+          </p>
         </motion.div>
 
         {/* Difficulty Boxes */}
