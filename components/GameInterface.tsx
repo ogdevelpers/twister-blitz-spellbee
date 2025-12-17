@@ -134,12 +134,15 @@ const GameInterface: React.FC = () => {
   const startGame = useCallback(async () => {
     // Request microphone permission before starting the game
     try {
-      if (navigator.permissions && navigator.permissions.query) {
-        await navigator.permissions.query({ name: 'microphone' as PermissionName });
-      }
-    } catch (e) {
-      // Permissions API might not be supported, that's okay
-      console.log('Permissions API not available, proceeding anyway');
+      // Try to get user media to request permission explicitly
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      // Stop the stream immediately - we just needed permission
+      stream.getTracks().forEach(track => track.stop());
+      console.log('✅ Microphone permission granted');
+    } catch (e: any) {
+      console.error('❌ Microphone permission error:', e);
+      // If permission is denied, the VoiceInput component will handle showing the error
+      // We still start the game so the user can see the error message
     }
     
     setGameState(prev => ({ ...prev, status: 'playing', score: 0, timeLeft: GAME_DURATION }));
@@ -485,15 +488,6 @@ const GameInterface: React.FC = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
-
-      {/* Voice Input - Always mounted for proper initialization (hidden when not playing) */}
-      <div className="hidden">
-        <VoiceInput 
-          isListening={false} 
-          targetPhrase="" 
-          onMatch={() => {}}
-        />
       </div>
 
       {/* Controls Area */}

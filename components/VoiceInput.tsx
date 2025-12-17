@@ -227,19 +227,24 @@ const VoiceInput = forwardRef<VoiceInputHandle, VoiceInputProps>(({ isListening,
         if (isMountedRef.current) {
           setIsRecording(false);
           
-          // Only restart if we should still be listening and user initiated the start
-          if (isListening && startAttemptRef.current) {
+          // Restart if we should still be listening (regardless of startAttemptRef)
+          // This ensures continuous listening during gameplay
+          if (isListening) {
             console.log('🔄 Attempting to restart recognition...');
             setTimeout(() => {
               if (isListening && isMountedRef.current && recognitionRef.current) {
                 try {
                   recognitionRef.current.start();
+                  console.log('✅ Recognition restarted successfully');
                 } catch (e: any) {
                   console.error('Error restarting:', e);
                   if (e.name !== 'InvalidStateError') {
                     if (isMountedRef.current) {
                       setError("Microphone stopped. Please click START GAME again.");
                     }
+                  } else {
+                    // Already started, that's fine
+                    setIsRecording(true);
                   }
                 }
               }
@@ -300,7 +305,7 @@ const VoiceInput = forwardRef<VoiceInputHandle, VoiceInputProps>(({ isListening,
   useEffect(() => {
     if (!recognitionRef.current) return;
 
-    if (isListening && !isRecording && !startAttemptRef.current) {
+    if (isListening && !isRecording) {
       // Reset statement tracking when starting to listen
       processedStatementsRef.current.clear();
       lastProcessedTimeRef.current = 0;
@@ -309,20 +314,29 @@ const VoiceInput = forwardRef<VoiceInputHandle, VoiceInputProps>(({ isListening,
       startAttemptRef.current = true;
       console.log('🎤 Starting microphone...');
       
-      try {
-        recognitionRef.current.start();
-        console.log('✅ Start command sent');
-      } catch (e: any) {
-        startAttemptRef.current = false;
-        console.error('Error starting recognition:', e);
-        
-        if (e.name === 'InvalidStateError') {
-          // Already started
-          setIsRecording(true);
-        } else {
-          setError("Failed to start microphone. Please click START GAME again.");
+      // Small delay to ensure recognition is ready
+      const startTimeout = setTimeout(() => {
+        if (isListening && !isRecording && recognitionRef.current) {
+          try {
+            recognitionRef.current.start();
+            console.log('✅ Start command sent');
+          } catch (e: any) {
+            startAttemptRef.current = false;
+            console.error('Error starting recognition:', e);
+            
+            if (e.name === 'InvalidStateError') {
+              // Already started, that's fine
+              setIsRecording(true);
+            } else if (e.name === 'not-allowed') {
+              setError("Microphone permission denied. Please allow microphone access in your browser settings and refresh the page.");
+            } else {
+              setError("Failed to start microphone. Please click START GAME again.");
+            }
+          }
         }
-      }
+      }, 100);
+      
+      return () => clearTimeout(startTimeout);
     } else if (!isListening && isRecording) {
       // Stop when isListening becomes false
       startAttemptRef.current = false;
